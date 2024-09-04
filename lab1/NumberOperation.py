@@ -1,23 +1,23 @@
 class NumberOperations:
     def __init__(self):
         self.numbers = [
-            1,                  # Byte equivalent
-            4,                  # Byte equivalent
-            10,                 # Integer
-            50,                 # Integer
-            70,                 # Integer
-            90,                 # Integer
-            20.5,               # Float
-            40.7,               # Float
-            60.3,               # Float
-            80.1,               # Float
-            100.9,              # Float
-            563,                # Short equivalent
-            1054,               # Short equivalent
-            426092952.0,        # Double equivalent
-            6208674592,         # Long equivalent
-            45,                 # Long
-            90,                 # Long
+            1,               # Byte equivalent
+            4,               # Byte equivalent
+            10,              # Integer
+            50,              # Integer
+            70,              # Integer
+            90,              # Integer
+            20.5,            # Float
+            40.7,            # Float
+            60.3,            # Float
+            80.1,            # Float
+            100.9,           # Float
+            563,             # Short equivalent
+            1054,            # Short equivalent
+            426092952.0,     # Double equivalent
+            6208674592,      # Long equivalent
+            45,              # Long
+            90,              # Long
         ]
 
     def print_numbers(self):
@@ -35,7 +35,6 @@ class NumberOperations:
         integer_numbers = []
         long_numbers = []
         float_numbers = []
-        double_numbers = []
 
         for number in self.numbers:
             if isinstance(number, int):
@@ -48,18 +47,13 @@ class NumberOperations:
                 else:
                     long_numbers.append(number)
             elif isinstance(number, float):
-                if number == int(number):
-                    integer_numbers.append(int(number))
-                else:
-                    float_numbers.append(number)
-                double_numbers.append(number)
+                float_numbers.append(number)
 
         print("\nByte числа:", ' '.join(map(str, byte_numbers)))
         print("Short числа:", ' '.join(map(str, short_numbers)))
         print("Integer числа:", ' '.join(map(str, integer_numbers)))
         print("Long числа:", ' '.join(map(str, long_numbers)))
         print("Float числа:", ' '.join(map(str, float_numbers)))
-        print("Double числа:", ' '.join(map(str, double_numbers)))
 
     def sum_of_numbers_greater_than_50(self):
         sum_greater_than_50 = sum(number for number in self.numbers if number > 50)
