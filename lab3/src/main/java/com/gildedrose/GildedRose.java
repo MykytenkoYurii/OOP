@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 public class GildedRose {
     public Item[] items;
 
@@ -8,25 +10,23 @@ public class GildedRose {
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            updateItem(item);
-        }
+        Arrays.stream(items).forEach(this::updateItem);
     }
 
     private void updateItem(Item item) {
-        if (item.name.equals("Aged Brie")) {
+        if (item.name.getName().equals("Aged Brie")) {
             updateAgedBrie(item);
             return;
         }
 
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.name.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
             updateBackstagePass(item);
             return;
         }
 
         updateNormalItem(item);
 
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (!item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
             item.sellIn = item.sellIn - 1;
         }
 
@@ -57,24 +57,24 @@ public class GildedRose {
 
     private void updateNormalItem(Item item) {
         if (item.quality > 0) {
-            if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (!item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
                 item.quality--;
             }
         }
     }
 
     private void handleExpired(Item item) {
-        if (item.name.equals("Aged Brie")) {
+        if (item.name.getName().equals("Aged Brie")) {
             updateAgedBrie(item);
             return;
         }
 
-        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.name.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
             item.quality = 0;
             return;
         }
 
-        if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (item.quality > 0 && !item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
             item.quality--;
         }
     }
