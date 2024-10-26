@@ -14,19 +14,20 @@ public class GildedRose {
     }
 
     private void updateItem(Item item) {
-        if (item.name.getName().equals("Aged Brie")) {
+        String itemName = item.name.getName();
+        if (itemName.equals("Aged Brie")) {
             updateAgedBrie(item);
             return;
         }
 
-        if (item.name.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
             updateBackstagePass(item);
             return;
         }
 
         updateNormalItem(item);
 
-        if (!item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
+        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
             item.sellIn = item.sellIn - 1;
         }
 
@@ -64,17 +65,18 @@ public class GildedRose {
     }
 
     private void handleExpired(Item item) {
-        if (item.name.getName().equals("Aged Brie")) {
+        String itemName = item.name.getName();
+        if (itemName.equals("Aged Brie")) {
             updateAgedBrie(item);
             return;
         }
 
-        if (item.name.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
             item.quality = 0;
             return;
         }
 
-        if (item.quality > 0 && !item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
+        if (item.quality > 0 && !itemName.equals("Sulfuras, Hand of Ragnaros")) {
             item.quality--;
         }
     }
