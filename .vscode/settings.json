@@ -1,0 +1,5 @@
+{
+    "java.project.referencedLibraries": [
+        "libs/junit-jupiter-api-5.11.3.jar"
+    ]
+}
