@@ -1,82 +1,97 @@
 package com.gildedrose;
 
-import java.util.Arrays;
+import java.util.List;
 
-public class GildedRose {
+class GildedRose {
     public Item[] items;
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
 
+    public GildedRose(List<Item> items) {
+        this.items = items.toArray(new Item[items.size()]);
+    }
+
     public void updateQuality() {
-        Arrays.stream(items).forEach(this::updateItem);
-    }
+        for (Item item : items) {
+            if (item.name.equals("foo")) {
+                item.name = "fixme";
+            }
 
-    private void updateItem(Item item) {
-        String itemName = item.name.getName();
-        if (itemName.equals("Aged Brie")) {
-            updateAgedBrie(item);
-            return;
-        }
+            if (isLegendary(item)) {
+                continue;
+            }
 
-        if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            updateBackstagePass(item);
-            return;
-        }
+            updateSellIn(item);
 
-        updateNormalItem(item);
+            if (isExpired(item)) {
+                handleExpiredItem(item);
+                continue;
+            }
 
-        if (!itemName.equals("Sulfuras, Hand of Ragnaros")) {
-            item.sellIn = item.sellIn - 1;
-        }
+            updateItemQuality(item);
 
-        if (item.sellIn < 0) {
-            handleExpired(item);
-        }
-    }
-
-    private void updateAgedBrie(Item item) {
-        if (item.quality < 50) {
-            item.quality++;
-        }
-    }
-
-    private void updateBackstagePass(Item item) {
-        if (item.quality < 50) {
-            item.quality++;
-        }
-
-        if (item.sellIn < 11 && item.quality < 50) {
-            item.quality++;
-        }
-
-        if (item.sellIn < 6 && item.quality < 50) {
-            item.quality++;
-        }
-    }
-
-    private void updateNormalItem(Item item) {
-        if (item.quality > 0) {
-            if (!item.name.getName().equals("Sulfuras, Hand of Ragnaros")) {
-                item.quality--;
+            if (item.quality < 0) {
+                item.quality = 0;
             }
         }
     }
 
-    private void handleExpired(Item item) {
-        String itemName = item.name.getName();
-        if (itemName.equals("Aged Brie")) {
-            updateAgedBrie(item);
+    private boolean isLegendary(Item item) {
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
+    }
+
+    private void updateSellIn(Item item) {
+        item.sellIn--;
+    }
+
+    private boolean isExpired(Item item) {
+        return item.sellIn < 0;
+    }
+
+    private void handleExpiredItem(Item item) {
+        if (item.name.equals("Aged Brie")) {
+            increaseQuality(item);
             return;
         }
-
-        if (itemName.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             item.quality = 0;
             return;
         }
+        decreaseQuality(item);
+    }
 
-        if (item.quality > 0 && !itemName.equals("Sulfuras, Hand of Ragnaros")) {
+    private void updateItemQuality(Item item) {
+        if (item.name.equals("Aged Brie")) {
+            increaseQuality(item);
+            return;
+        }
+
+        if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            increaseQuality(item);
+
+            if (item.sellIn < 10) {
+                increaseQuality(item);
+            }
+
+            if (item.sellIn < 5) {
+                increaseQuality(item);
+            }
+            return;
+        }
+
+        decreaseQuality(item);
+    }
+
+    private void increaseQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality++;
+        }
+    }
+
+    private void decreaseQuality(Item item) {
+        if (item.quality > 0) {
             item.quality--;
         }
     }
